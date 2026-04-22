@@ -27,10 +27,10 @@ const page = () => {
   }, [])
   
   const { loadScript, openCheckout } = useRazorpay();
-  const handlechange=(e)=>{
+  const handlechange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setpaymentdata({...paymentdata,[e.target.name]:e.target.value})
   }
-  const  paymentsuccesshandle=async(response)=>{
+  const  paymentsuccesshandle=async(response:RazorpayResponse)=>{
     if(response){
       await varifypayment(response)
     }
@@ -46,7 +46,7 @@ const page = () => {
     const options: RazorpayOptions = {
       //            ↑ no import needed
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-      amount: order.amount,
+      amount: Number(order.amount),
       currency: order.currency,
       retry: false,
       name: "TipJar",

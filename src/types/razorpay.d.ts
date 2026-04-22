@@ -25,6 +25,7 @@ interface RazorpayOptions {
   currency: string;
   name: string;
   description?: string;
+  retry?:boolean
   image?: string;
   order_id: string;
   prefill?: RazorpayPrefill;
@@ -50,4 +51,3 @@ declare global {
   }
 }
 
-export {};
