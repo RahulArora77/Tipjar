@@ -15,7 +15,7 @@ const useRazorpay = () => {
   };
 
   const openCheckout = (options:RazorpayOptions) => {
-    const rzp = new window.Razorpay(options);
+    const rzp = new (window as any).Razorpay(options);
     rzp.open();
     return rzp
   };
