@@ -1,13 +1,31 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { IUser } from "@/model/dbschema";
 import { useParams } from "next/navigation";
 import useRazorpay from "../hooks/userazorpay";
 import { createOrder } from "@/actions/paymenthandling"
 import { varifypayment } from "@/actions/paymenthandling";
+import { getpagedetails } from "@/actions/serveraction";
+
 
 const page = () => {
+  const [pagedata, setpagedata] = useState<IUser|{}>({})
   const [paymentdata, setpaymentdata] = useState({amount:0,message:"hello"})
   const { users: params } = useParams()
+  const fetchpagedata=async(params:string)=>{
+     const pagedetails= await getpagedetails(params)
+     if(!pagedetails){
+      console.log("usernot exits")
+     }
+     else{setpagedata(pagedetails)}
+
+  }
+  console.log(pagedata)
+  useEffect(() => {
+    fetchpagedata(String(params))
+   
+  }, [])
+  
   const { loadScript, openCheckout } = useRazorpay();
   const handlechange=(e)=>{
     setpaymentdata({...paymentdata,[e.target.name]:e.target.value})

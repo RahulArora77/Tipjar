@@ -60,3 +60,13 @@ export async function showcreator(query:string) {
   const users = await User.find({username: { $regex: query, $options: "i" }},{username:1,_id:0}).limit(10).lean();
   return JSON.parse(JSON.stringify(users));
 }
+export async function getpagedetails(params:string){
+  await connectDB()
+  const data=await User.findOne({username:params}).lean()
+  if (!data) return null;
+
+
+  return JSON.parse(JSON.stringify(data));
+
+
+}
